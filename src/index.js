@@ -34,6 +34,12 @@ function checksCreateTodosUserAvailability(request, response, next) {
 function checksTodoExists(request, response, next) {
   const { id } = request.params;
 
+  const validId = validate(id);
+
+  if (!validId) {
+    return response.status(400).json({ error: 'Invalid todo ID' });
+  }
+
   const todo = users.find(user => user.todos.find(todo => todo.id === id));
 
   if (!todo) {
@@ -45,6 +51,12 @@ function checksTodoExists(request, response, next) {
 
 function findUserById(request, response, next) {
   const { id } = request.params;
+
+  const validId = validate(id);
+
+  if (!validId) {
+    return response.status(400).json({ error: 'Invalid user ID' });
+  }
 
   const user = users.find(user => user.id === id);
 
